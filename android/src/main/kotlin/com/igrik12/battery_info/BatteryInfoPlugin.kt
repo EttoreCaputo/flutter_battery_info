@@ -72,15 +72,21 @@ public class BatteryInfoPlugin : FlutterPlugin, MethodCallHandler, StreamHandler
         var currentAverage = -1
         var currentNow = -1
         var present = intent.extras?.getBoolean(BatteryManager.EXTRA_PRESENT);
-        var scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE,0);
+        var scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
         var remainingEnergy = -1;
+        var cyclesCount = -1;
+        var batteryTemperature = -1;
         var technology = intent.extras?.getString(BatteryManager.EXTRA_TECHNOLOGY);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            batteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)
             batteryLevel = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
             batteryCapacity = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER)
             currentAverage = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_AVERAGE)
             currentNow = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW)
             remainingEnergy = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_ENERGY_COUNTER);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            cyclesCount = intent.getIntExtra(BatteryManager.EXTRA_CYCLE_COUNT, -1)
         }
 
         val chargeTimeRemaining = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -103,7 +109,8 @@ public class BatteryInfoPlugin : FlutterPlugin, MethodCallHandler, StreamHandler
                 "scale" to scale,
                 "technology" to technology,
                 "temperature" to temperature / 10,
-                "voltage" to voltage
+                "voltage" to voltage,
+                "cyclesCount" to cyclesCount
         )
     }
 
