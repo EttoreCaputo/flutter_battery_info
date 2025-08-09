@@ -15,6 +15,7 @@ class AndroidBatteryInfo {
   int? temperature = -1;
   int? voltage = -1;
   bool? present = true;
+  int? cycles = -1;
   ChargingStatus? chargingStatus;
 
   AndroidBatteryInfo({
@@ -51,6 +52,7 @@ class AndroidBatteryInfo {
     data["temperature"] = this.temperature;
     data["technology"] = this.technology;
     data["voltage"] = this.voltage;
+    data["cyclesCount"] = this.cycles;
     return data;
   }
 
@@ -84,5 +86,6 @@ class AndroidBatteryInfo {
     this.technology = json["technology"];
     this.temperature = json["temperature"];
     this.voltage = json["voltage"];
+    this.cycles = json["cyclesCount"];
   }
 }

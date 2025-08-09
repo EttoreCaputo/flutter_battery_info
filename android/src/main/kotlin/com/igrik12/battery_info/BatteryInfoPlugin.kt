@@ -78,7 +78,6 @@ public class BatteryInfoPlugin : FlutterPlugin, MethodCallHandler, StreamHandler
         var batteryTemperature = -1;
         var technology = intent.extras?.getString(BatteryManager.EXTRA_TECHNOLOGY);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            batteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1)
             batteryLevel = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
             batteryCapacity = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER)
             currentAverage = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_AVERAGE)

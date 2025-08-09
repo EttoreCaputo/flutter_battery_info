@@ -1,18 +1,23 @@
-group 'com.igrik12.battery_info'
-version '1.0-SNAPSHOT'
-
 buildscript {
-    ext.kotlin_version = '1.8.10'
+    ext.kotlin_version = '1.9.24'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.6.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+group 'com.igrik12.battery_info'
+version '1.0-SNAPSHOT'
 
 rootProject.allprojects {
     repositories {
@@ -21,11 +26,9 @@ rootProject.allprojects {
     }
 }
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
+    namespace "com.igrik12.battery_info"
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -33,8 +36,15 @@ android {
     defaultConfig {
         minSdkVersion 23
     }
-    lintOptions {
+    lint {
         disable 'InvalidPackage'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 
