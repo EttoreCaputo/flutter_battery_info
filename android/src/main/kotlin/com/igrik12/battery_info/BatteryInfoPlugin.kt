@@ -66,9 +66,11 @@ public class BatteryInfoPlugin : FlutterPlugin, MethodCallHandler, StreamHandler
         var chargingStatus = getChargingStatus(intent)
         val voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1)
         val health = getBatteryHealth(intent)
+        val healthInt = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, -1)
         val pluggedStatus = getBatteryPluggedStatus(intent)
         var batteryLevel = -1
         var batteryCapacity = -1
+        var maxDesignedCapacity = getDesignCapacityMah()
         var currentAverage = -1
         var currentNow = -1
         var present = intent.extras?.getBoolean(BatteryManager.EXTRA_PRESENT);
@@ -102,6 +104,7 @@ public class BatteryInfoPlugin : FlutterPlugin, MethodCallHandler, StreamHandler
                 "currentAverage" to currentAverage,
                 "currentNow" to currentNow,
                 "health" to health,
+                "healthInt" to healthInt,
                 "present" to present,
                 "pluggedStatus" to pluggedStatus,
                 "remainingEnergy" to remainingEnergy,
@@ -109,8 +112,21 @@ public class BatteryInfoPlugin : FlutterPlugin, MethodCallHandler, StreamHandler
                 "technology" to technology,
                 "temperature" to temperature / 10,
                 "voltage" to voltage,
-                "cyclesCount" to cyclesCount
+                "cyclesCount" to cyclesCount,
+                "maxDesignedCapacity" to maxDesignedCapacity
         )
+    }
+
+    private fun getDesignCapacityMah(): Int {
+        return try {
+            val powerProfileClass = Class.forName("com.android.internal.os.PowerProfile")
+            val powerProfile = powerProfileClass.getConstructor(Context::class.java).newInstance(applicationContext)
+            val batteryCapacity = powerProfileClass.getMethod("getAveragePower", String::class.java)
+                .invoke(powerProfile, "battery.capacity") as Double
+            batteryCapacity.toInt()
+        } catch (e: Exception) {
+            -1
+        }
     }
 
     /** Gets the current charging state of the device */

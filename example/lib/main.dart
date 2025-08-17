@@ -57,6 +57,16 @@ class MyApp extends StatelessWidget {
                           SizedBox(
                             height: 20,
                           ),
+                          Text(
+                              "Battery current average: ${data.currentAverage != null ? (data.currentAverage! ) : "Unknown"} mAh"),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                              "Temperature: ${data.temperature != null ? (data.temperature!) : "Unknown"} Degree"),
+                          SizedBox(
+                            height: 20,
+                          ),
                           Text("Technology: ${data.technology ?? "Unknown"} "),
                           SizedBox(
                             height: 20,
@@ -77,6 +87,16 @@ class MyApp extends StatelessWidget {
                           ),
                           Text(
                               "Cycles: ${data.cycles != null ? data.cycles! : "Unknown"}"),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                              "HealthInt: ${data.healthInt != null ? data.healthInt! : "Unknown"}"),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                              "maxDesignedCapacity: ${data.maxDesignedCapacity != null ? data.maxDesignedCapacity! : "Unknown"}"),
                           SizedBox(
                             height: 20,
                           ),
@@ -102,4 +122,5 @@ class MyApp extends StatelessWidget {
     }
     return Text("Battery is full or not connected to a power source");
   }
+
 }

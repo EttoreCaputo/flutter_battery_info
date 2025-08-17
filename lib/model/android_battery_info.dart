@@ -16,6 +16,8 @@ class AndroidBatteryInfo {
   int? voltage = -1;
   bool? present = true;
   int? cycles = -1;
+  int? healthInt = -1;
+  int? maxDesignedCapacity = -1;
   ChargingStatus? chargingStatus;
 
   AndroidBatteryInfo({
@@ -33,6 +35,9 @@ class AndroidBatteryInfo {
     this.technology,
     this.temperature,
     this.voltage,
+    this.cycles,
+    this.healthInt,
+    this.maxDesignedCapacity
   });
 
   /// Serialise data back to json from the model
@@ -53,6 +58,8 @@ class AndroidBatteryInfo {
     data["technology"] = this.technology;
     data["voltage"] = this.voltage;
     data["cyclesCount"] = this.cycles;
+    data["healthInt"] = this.healthInt;
+    data["maxDesignedCapacity"] = this.maxDesignedCapacity;
     return data;
   }
 
@@ -87,5 +94,7 @@ class AndroidBatteryInfo {
     this.temperature = json["temperature"];
     this.voltage = json["voltage"];
     this.cycles = json["cyclesCount"];
+    this.healthInt = json["healthInt"];
+    this.maxDesignedCapacity = json["maxDesignedCapacity"];
   }
 }
